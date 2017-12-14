@@ -38,11 +38,6 @@ export const inline = {
     type: [Boolean, Number],
     default: 0,
     validator: v => [true, false, 0].includes(v)
-  },
-  initialView: {
-    type: String,
-    default: '',
-    validator: v => /^(hour|day|year|month)?$/.test(v.toLowerCase())
   }
 }
 
