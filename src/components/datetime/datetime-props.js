@@ -46,7 +46,12 @@ export const inline = {
   },
   mondayFirst: Boolean,
   saturdayFirst: Boolean,
-  format24h: Boolean
+  format24h: Boolean,
+  initialView: {
+    type: String,
+    default: '',
+    validator: v => /^(hour|day|year|month)?$/.test(v.toLowerCase())
+  }
 }
 
 export const input = {

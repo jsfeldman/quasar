@@ -242,7 +242,8 @@ export default {
   props: {
     defaultSelection: [String, Number, Date],
     disable: Boolean,
-    readonly: Boolean
+    readonly: Boolean,
+    focused: Boolean
   },
   components: {
     QIcon,
@@ -254,14 +255,19 @@ export default {
   data () {
     let view
 
-    switch (this.type) {
-      case 'time':
-        view = 'hour'
-        break
-      case 'date':
-      default:
-        view = 'day'
-        break
+    if (this.initialView !== '') {
+      view = this.initialView
+    }
+    else {
+      switch (this.type) {
+        case 'time':
+          view = 'hour'
+          break
+        case 'date':
+        default:
+          view = 'day'
+          break
+      }
     }
 
     return {
@@ -288,6 +294,18 @@ export default {
       this.$nextTick(() => {
         view.scrollTop = rows * height(view.children[0].children[0]) - height(view) / 2.5
       })
+    },
+    focused (value) {
+      if (value === true) {
+        if (this.initialView !== '') {
+          if (this.view !== this.initialView) {
+            this.view = this.initialView
+          }
+          else {
+            this.scrollView(this.view)
+          }
+        }
+      }
     }
   },
   computed: {
@@ -427,6 +445,14 @@ export default {
       }
 
       this.model = new Date(this.model.setMinutes(this.__parseTypeValue('minute', value)))
+    },
+    scrollView (value) {
+      let
+        view = this.$refs.selector,
+        rows = value === 'year' ? this.year - this.yearMin : this.month - this.monthMin
+      this.$nextTick(() => {
+        view.scrollTop = rows * height(view.children[0].children[0]) - height(view) / 2.5
+      })
     },
 
     /* helpers */
