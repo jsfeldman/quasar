@@ -287,13 +287,7 @@ export default {
         return
       }
 
-      let
-        view = this.$refs.selector,
-        rows = value === 'year' ? this.year - this.yearMin : this.month - this.monthMin
-
-      this.$nextTick(() => {
-        view.scrollTop = rows * height(view.children[0].children[0]) - height(view) / 2.5
-      })
+      this.yearMinscrollView(value)
     },
     focused (value) {
       if (value === true) {
@@ -452,6 +446,11 @@ export default {
         rows = value === 'year' ? this.year - this.yearMin : this.month - this.monthMin
       this.$nextTick(() => {
         view.scrollTop = rows * height(view.children[0].children[0]) - height(view) / 2.5
+        if (view.scrollTop === 0) {
+          setTimeout(() => {
+            view.scrollTop = rows * height(view.children[0].children[0]) - height(view) / 2.5
+          }, 300)
+        }
       })
     },
 
