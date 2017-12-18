@@ -287,7 +287,7 @@ export default {
         return
       }
 
-      this.yearMinscrollView(value)
+      this.scrollView(value)
     },
     focused (value) {
       if (value === true) {
