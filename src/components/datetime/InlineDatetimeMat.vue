@@ -279,7 +279,12 @@ export default {
   watch: {
     value (val) {
       if (!val) {
-        this.view = ['date', 'datetime'].includes(this.type) ? 'day' : 'hour'
+        if (this.initialView) {
+          this.view = this.initialView
+        }
+        else {
+          this.view = ['date', 'datetime'].includes(this.type) ? 'day' : 'hour'
+        }
       }
     },
     view (value) {
